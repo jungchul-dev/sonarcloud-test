@@ -65,7 +65,7 @@ def execute_api(offering, sub_url, access_key, secret_key, type, params=None, pa
 def main():
     with st.sidebar:
         st.header("Account Configuration")
-        offering = st.selectbox("Offering", ["For Samsung", "For Enterprise"], key='offering', on_change=change_offering, args=(,), index=None, placeholder="Select Offering")
+        offering = st.selectbox("Offering", ["For Samsung", "For Enterprise"], key='offering', on_change=change_offering, args=(), index=None, placeholder="Select Offering")
         access_key = st.text_input("Account Key")
         secret_key = st.text_input("Secret Key", type="password")
 
