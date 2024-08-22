@@ -1,3 +1,5 @@
+import streamlit as st
+
 st.set_page_config(page_title="GitHub Migration", layout="wide", page_icon="🚀")
 spinner_placeholder = st.empty()
 
