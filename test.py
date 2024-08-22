@@ -56,11 +56,50 @@ source_div, blank1, target_div, blank2, log_div = st.columns([1, 0.1, 1, 0.1, 0.
 def change_offering():
     print("")
 
+def get_result(command):
+    result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output = result.stdout.decode('utf-8')
+    if isJson(output):
+        data = json.loads(output)
+        if 'contactUrl' in data and 'requestId' in data and 'status' in data and data['status'] >= 400:
+            print(f"Error occured!!")
+            print(f"==== command: {command}")
+            print(f"==== status: {data['status']}")
+            print(f"==== code: {data['code']}")
+            print(f"==== message: {data['message']}")
+            print(f"==== requestId: {data['requestId']}")
+            raise Exception(f"status: {data['status']}<br>code: {data['code']}<br>message: {data['message']}")
+        return data
+    else:
+        print(f"Error occured when result decode!!")
+        print(f"==== result: {result}")
+        print(f"==== traceback: {traceback.format_exc()}")
+        raise Exception(f"status: result parsing error<br>result: {result}")
+
 def execute_api(offering, sub_url, access_key, secret_key, type, params=None, payload=None, success=None, fail=None, getall=True, data_key=None):
-    headers = {
-        "Authorization": f"token {access_key}",
-        "Accept": "application/vnd.github+json"
-    }
+    os.environ['PROJECT_ID'] = ""
+    os.environ['CMP_URL'] = ""
+    os.environ['ACCESS_KEY'] = access_key
+    os.environ['SECRET_KEY'] = secret_key
+
+    result = subprocess.run(f"REQ_URL='{sub_url}' scp-api", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output = result.stdout.decode('utf-8')
+    if isJson(output):
+        data = json.loads(output)
+        if 'contactUrl' in data and 'requestId' in data and 'status' in data and data['status'] >= 400:
+            print(f"Error occured!!")
+            print(f"==== command: {command}")
+            print(f"==== status: {data['status']}")
+            print(f"==== code: {data['code']}")
+            print(f"==== message: {data['message']}")
+            print(f"==== requestId: {data['requestId']}")
+            raise Exception(f"status: {data['status']}<br>code: {data['code']}<br>message: {data['message']}")
+        return data
+    else:
+        print(f"Error occured when result decode!!")
+        print(f"==== result: {result}")
+        print(f"==== traceback: {traceback.format_exc()}")
+        raise Exception(f"status: result parsing error<br>result: {result}")
 
 def main():
     with st.sidebar:
