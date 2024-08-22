@@ -54,7 +54,8 @@ div[data-testid="stPopoverBody"] {
 st.title("🍟GitHub Migration")
 source_div, blank1, target_div, blank2, log_div = st.columns([1, 0.1, 1, 0.1, 0.5])
 
+def main():
+    print("")
 
 if __name__ == '__main__':
     main()
-
